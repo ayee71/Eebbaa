@@ -1,0 +1,9 @@
+node_modules/
+downloads/
+*.session
+*.session-journal
+.lesshst
+Wakane_bot/
+Tiktok_bot.py
+update.sh
+update_website.sh

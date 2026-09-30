@@ -1,0 +1,96 @@
+    <!-- Maxxansaalee Social Media (Dynamic JSON Feed) -->
+    <section id="feeds" class="py-16 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-white mb-2">Maxxansaalee Hubannoo Seeraa Haaraa</h2>
+            <p class="text-slate-400 text-sm">Maxxansaalee Telegram fi Facebook irratti bahan asumaan dubbisaa</p>
+        </div>
+        
+        <!-- Container kan Maxxansaaleen itti uumaman -->
+        <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <p class="text-slate-400 text-center col-span-2">Maxxansaaleen fe'amaa jiru...</p>
+        </div>
+    </section>
+
+    <script>
+        async function loadPosts() {
+            try {
+                const response = await fetch('posts.json');
+                const posts = await response.json();
+                const container = document.getElementById('posts-container');
+                container.innerHTML = '';
+
+                if (posts.length === 0) {
+                    container.innerHTML = '<p class="text-slate-400 text-center col-span-2">Maxxansaan hin argamne.</p>';
+                    return;
+                }
+
+                posts.reverse().forEach(post => {
+                    const dateStr = post.date ? new Date(post.date).toLocaleDateString() : '';
+                    
+                    const card = `
+                        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 space-y-4 hover:border-sky-500/50 transition flex flex-col justify-between">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-semibold px-2.5 py-1 rounded bg-sky-500/20 text-sky-400 border border-sky-500/30">
+                                        <i class="fa-brands fa-telegram mr-1"></i> ${post.source}
+                                    </span>
+                                    <span class="text-xs text-slate-400">${dateStr}</span>
+                                </div>
+                                <p class="text-sm text-slate-200 leading-relaxed whitespace-pre-line">${post.text}</p>
+                            </div>
+                            <div class="pt-4 border-t border-slate-700/50">
+                                <a href="${post.link}" target="_blank" class="text-xs text-sky-400 hover:underline flex items-center gap-1 font-medium">
+                                    Telegram irratti banii dubbisi <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += card;
+                });
+            } catch (error) {
+                console.error('Error loading posts:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadPosts);
+    </script>
+
+<section class="py-10 px-4 max-w-6xl mx-auto">
+  <h2 class="text-2xl font-bold text-center text-white mb-6">Maxxansaalee Hubannoo Seeraa Haaraa</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    
+    <!-- Facebook Feed (@AyyuLawyer) -->
+    <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700 flex flex-col items-center">
+      <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center gap-2">
+        Facebook Feed (@AyyuLawyer)
+      </h3>
+      <iframe 
+        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FAyyuLawyer&tabs=timeline&width=380&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true" 
+        width="100%" 
+        height="500" 
+        style="border:none; overflow:hidden; border-radius: 10px;" 
+        scrolling="no" 
+        frameborder="0" 
+        allowfullscreen="true" 
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+      </iframe>
+    </div>
+
+    <!-- Telegram Feed (@ayelebeharmee) -->
+    <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700 flex flex-col items-center">
+      <h3 class="text-lg font-semibold text-sky-400 mb-4 flex items-center gap-2">
+        Telegram Channel (@ayelebeharmee)
+      </h3>
+      <iframe 
+        src="https://t.me/s/ayelebeharmee" 
+        width="100%" 
+        height="500" 
+        style="border:none; overflow:auto; border-radius: 10px; background-color: #1c2733;"
+        frameborder="0">
+      </iframe>
+    </div>
+
+  </div>
+</section>
+eebbaa205
