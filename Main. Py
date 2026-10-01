@@ -3,33 +3,42 @@ import asyncio
 from flask import Flask
 from threading import Thread
 from telethon import TelegramClient, events
-Environment Variables Render irraa fuudhuu
+
+# Environment Variables Render irraa fuudhuu
 API_ID = int(os.environ.get("TELEGRAM_API_ID", "36191585"))
 API_HASH = os.environ.get("TELEGRAM_API_HASH", "c4a7610272411c513373141b2c9431e1")
 PHONE = os.environ.get("TELEGRAM_PHONE", "+251915030171")
 CHANNEL = os.environ.get("TELEGRAM_CHANNEL", "@ayelebeharmee")
-Flask Web Server (Render port binding gochuuf)
-app = Flask(name)
+
+# Flask Web Server (Render port binding gochuuf)
+app = Flask(__name__)
+
 @app.route('/')
 def home():
-return "Bot'n Telegram kee sirnaan hojjechaa jira!"
+    return "Bot'n Telegram kee sirnaan hojjechaa jira!"
+
 def run_flask():
-port = int(os.environ.get("PORT", 10000))
-app.run(host='0.0.0.0', port=port)
-Telethon Telegram Client Logic
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port)
+
+# Telethon Telegram Client Logic
 async def start_telegram():
-client = TelegramClient('anon_session', API_ID, API_HASH)
-@client.on(events.NewMessage(chats=CHANNEL if CHANNEL else None))
-async def my_event_handler(event):
-print(f"[ERGAA HAARAA]: {event.raw_text}")
-print("Telegram Client jalqabamaa jira...")
-await client.start(phone=lambda: PHONE)
-print("Telegram Client milkaa'inaan ka'eera!")
-await client.run_until_disconnected()
-if name == "main":
-# Flask server background thread irratti kaasuu
-flask_thread = Thread(target=run_flask)
-flask_thread.daemon = True
-flask_thread.start()
-# Telegram bot kaasuu
-asyncio.run(start_telegram())
+    client = TelegramClient('anon_session', API_ID, API_HASH)
+
+    @client.on(events.NewMessage(chats=CHANNEL if CHANNEL else None))
+    async def my_event_handler(event):
+        print(f"[ERGAA HAARAA]: {event.raw_text}")
+
+    print("Telegram Client jalqabamaa jira...")
+    await client.start(phone=lambda: PHONE)
+    print("Telegram Client milkaa'inaan ka'eera!")
+    await client.run_until_disconnected()
+
+if __name__ == "__main__":
+    # Flask server background thread irratti kaasuu
+    flask_thread = Thread(target=run_flask)
+    flask_thread.daemon = True
+    flask_thread.start()
+
+    # Telegram bot kaasuu
+    asyncio.run(start_telegram())
